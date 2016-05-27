@@ -12,7 +12,7 @@ import GameplayKit
 class ViewController: UIViewController {
     var PlayerView = UIView()
     var DealerView = UIView()
-    var deck = ["Hearts01","Hearts02","Hearts03","Hearts04","Hearts05","Hearts06","Hearts07","Hearts08","Hearts09","Hearts10","HeartsJ10","HeartQ10","HeartsK10","Diamonds01","Diamonds02","Diamonds03","Diamonds04","Diamonds05","Diamonds06","Diamonds07","Diamonds08","Diamonds09","Diamonds10","DiamondsJ10","DiamondsQ10","DiamondsK10","Spades01","Spades02","Spades03","Spades04","Spades05","Spades06","Spades07","Spades08","Spades09","Spades10","SpadesJ10","SpadesQ10","SpadesK10","Clubs01","Clubs02","Clubs03","Clubs04","Clubs05","Clubs06","Clubs07","Clubs08","Clubs09","Clubs10","ClubsJ10","ClubsQ10","ClubsK10"]
+    var deck = ["Hearts01", "Hearts02", "Hearts03", "Hearts04", "Hearts05", "Hearts06", "Hearts07", "Hearts08", "Hearts09", "Hearts10", "HeartsJ10", "HeartQ10", "HeartsK10", "Diamonds01", "Diamonds02", "Diamonds03", "Diamonds04", "Diamonds05", "Diamonds06", "Diamonds07", "Diamonds08", "Diamonds09", "Diamonds10", "DiamondsJ10", "DiamondsQ10", "DiamondsK10", "Spades01", "Spades02", "Spades03", "Spades04", "Spades05", "Spades06", "Spades07", "Spades08", "Spades09", "Spades10", "SpadesJ10", "SpadesQ10", "SpadesK10", "Clubs01", "Clubs02", "Clubs03", "Clubs04", "Clubs05", "Clubs06", "Clubs07", "Clubs08", "Clubs09", "Clubs10", "ClubsJ10", "ClubsQ10", "ClubsK10"]
     var gameover = false
     var newDeck = [String]()
     var Playerhand = [String]()
@@ -24,18 +24,18 @@ class ViewController: UIViewController {
     var Dealertotal = 0
     var counter1 = 2
     var counter2 = 2
-    var pScore = UILabel(frame: CGRectMake(100, 30, 200, 21))
-    var dScore = UILabel(frame: CGRectMake(100, 30, 200, 21))
-    
-    
-    override func viewDidLoad(){
+    var pScore = UILabel(frame: CGRect(x: 100, y: 30, width: 200, height: 21))
+    var dScore = UILabel(frame: CGRect(x: 100, y: 30, width: 200, height: 21))
+
+
+    override func viewDidLoad() {
         initDeck()
         createViews()
     }
-    func createViews(){
+    func createViews() {
         initPlayerHand()
         self.view.backgroundColor = UIColor.redColor()
-        PlayerView.frame = CGRectMake(10,15,300,200)
+        PlayerView.frame = CGRect(x: 10, y: 15, width: 300, height: 200)
         PlayerView.backgroundColor=UIColor.grayColor()
         PlayerView.layer.cornerRadius=1
         PlayerView.layer.borderWidth=0
@@ -44,113 +44,113 @@ class ViewController: UIViewController {
         createStandButton()
         PlayerScore()
         createPlayerImgHolders()
-        
+
         createNewGameButton()
-        
+
         initDealerHand()
-        DealerView.frame = CGRectMake(10,325,300,200)
+        DealerView.frame = CGRect(x: 10, y: 325, width: 300, height: 200)
         DealerView.backgroundColor=UIColor.grayColor()
         DealerView.layer.cornerRadius=1
         DealerView.layer.borderWidth=0
         self.view.addSubview(DealerView)
         createDealerImgHolders()
     }
-    func makePImageHolder(xPos: Int, yPos:Int, imgName: String){
+    func makePImageHolder(xPos: Int, yPos: Int, imgName: String) {
         let img = UIImageView()
-        img.frame = CGRectMake(CGFloat(xPos),CGFloat(yPos),65,100)
+        img.frame = CGRectMake(CGFloat(xPos), CGFloat(yPos), 65, 100)
         img.image = UIImage(named: imgName)
         self.PlayerView.addSubview(img)
     }
-    func makeDImageHolder(xPos: Int, yPos:Int, imgName: String){
+    func makeDImageHolder(xPos: Int, yPos: Int, imgName: String) {
         let img = UIImageView()
-        img.frame = CGRectMake(CGFloat(xPos),CGFloat(yPos),65,100)
+        img.frame = CGRectMake(CGFloat(xPos), CGFloat(yPos), 65, 100)
         img.image = UIImage(named: imgName)
         self.DealerView.addSubview(img)
 
     }
-    func createPlayerImgHolders(){
+    func createPlayerImgHolders() {
         let card1 = String(Playerhand[0])
         let card2 = String(Playerhand[1])
         PlayerX = 10
         makePImageHolder(PlayerX, yPos: 10, imgName: card1)
         PlayerX += 20
         makePImageHolder(PlayerX, yPos: 10, imgName: card2)
-        
+
     }
-    func createDealerImgHolders(){
+    func createDealerImgHolders() {
         makeDImageHolder(DealerX, yPos: 10, imgName: "cardback")
         DealerX += 20
         makeDImageHolder(DealerX, yPos: 10, imgName: "cardback")
-        
+
     }
-    func initPlayerHand(){
+    func initPlayerHand() {
         Playerhand.append(newDeck.removeFirst())
         Playerhand.append(newDeck.removeFirst())
         Playertotal = Int(String(Playerhand[0].characters.suffix(2)))! + Int(String(Playerhand[1].characters.suffix(2)))!
     }
-    
-    func initDealerHand(){
+
+    func initDealerHand() {
         Dealerhand.append(newDeck.removeFirst())
         Dealerhand.append(newDeck.removeFirst())
-        
+
         Dealertotal = Int(String(Dealerhand[0].characters.suffix(2)))! + Int(String(Dealerhand[1].characters.suffix(2)))!
     }
-    
-    func initDeck(){
+
+    func initDeck() {
         //shuffle the deck using GameplayKit
         let shuffledDeck = GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(deck)
         //append the items from the shuffled deck and force them to become Strings (they were Objects)
-        for item in shuffledDeck{
+        for item in shuffledDeck {
             newDeck.append(item as! String)
         }
     }
-    func FlipDealerCards(){
+    func FlipDealerCards() {
         DealerX = 10
         let card1 = String(Dealerhand[0])
         let card2 = String(Dealerhand[1])
-        
+
         makeDImageHolder(DealerX, yPos: 10, imgName: card1)
         DealerX += 20
         makeDImageHolder(DealerX, yPos: 10, imgName: card2)
-        
+
         DealerScore()
     }
-    func createHitButton(){
+    func createHitButton() {
         let button = UIButton()
-        button.frame = CGRectMake(10,115,34,20)
+        button.frame = CGRect(x: 10, y: 115, width: 34, height: 20)
         button.backgroundColor = UIColor.blackColor()
         button.layer.cornerRadius=1
         button.setTitle("Hit", forState: UIControlState.Normal)
         button.titleLabel!.font =  UIFont(name: "Helvetica Neue", size: 10)
         button.addTarget(self, action:Selector("hitButtonAction"), forControlEvents: UIControlEvents.TouchUpInside)
-        
+
         self.PlayerView.addSubview(button)
     }
-    func createStandButton(){
+    func createStandButton() {
         let button = UIButton()
-        button.frame = CGRectMake(50,115,50,20)
+        button.frame = CGRect(x: 50, y: 115, width: 50, height: 20)
         button.backgroundColor = UIColor.blackColor()
         button.layer.cornerRadius=10
         button.setTitle("Stand", forState: UIControlState.Normal)
         button.titleLabel!.font =  UIFont(name: "Helvetica Neue", size: 10)
         button.addTarget(self, action:Selector("standButtonAction"), forControlEvents: UIControlEvents.TouchUpInside)
-        
+
         self.PlayerView.addSubview(button)
     }
-    func createNewGameButton(){
+    func createNewGameButton() {
         let button = UIButton()
-        button.frame = CGRectMake(10,275,60,20)
+        button.frame = CGRect(x: 10, y: 275, width: 60, height: 20)
         button.backgroundColor = UIColor.blackColor()
         button.layer.cornerRadius=1
         button.setTitle("New Game", forState: UIControlState.Normal)
         button.titleLabel!.font =  UIFont(name: "Helvetica Neue", size: 10)
         button.addTarget(self, action:Selector("NGButtonAction"), forControlEvents: UIControlEvents.TouchUpInside)
-        
+
         self.view.addSubview(button)
 
     }
-    func DealerTotal(){
-        while Dealertotal < 17{
+    func DealerTotal() {
+        while Dealertotal < 17 {
             DealerX += 20
             Dealerhand.append(newDeck.removeFirst())
             makeDImageHolder(DealerX, yPos: PlayerY, imgName:String(Dealerhand[counter2]))
@@ -159,27 +159,24 @@ class ViewController: UIViewController {
             dScore.text = String("Your total: \(Dealertotal)")
         }
     }
-    func checkWinner(){
-        if Dealertotal > 21{
+    func checkWinner() {
+        if Dealertotal > 21 {
             Winfunc()
-        }
-        else if Dealertotal >= Playertotal{
+        } else if Dealertotal >= Playertotal {
             Losefunc()
-        }
-        else if Dealertotal < Playertotal{
+        } else if Dealertotal < Playertotal {
             Winfunc()
-        }
-        else if Dealertotal == 21{
+        } else if Dealertotal == 21 {
             Losefunc()
         }
     }
-    func standButtonAction(){
+    func standButtonAction() {
         FlipDealerCards()
         DealerTotal()
         checkWinner()
     }
-    
-    func NGButtonAction(){
+
+    func NGButtonAction() {
         PlayerView.removeFromSuperview()
         DealerView.removeFromSuperview()
         pScore.removeFromSuperview()
@@ -187,9 +184,9 @@ class ViewController: UIViewController {
         initallVariables()
         initDeck()
         createViews()
-        
+
     }
-    func initallVariables(){
+    func initallVariables() {
         PlayerView = UIView()
         DealerView = UIView()
         gameover = false
@@ -203,34 +200,33 @@ class ViewController: UIViewController {
         Dealertotal = 0
         counter1 = 2
         counter2 = 2
-        pScore = UILabel(frame: CGRectMake(100, 30, 200, 21))
-        dScore = UILabel(frame: CGRectMake(100, 30, 200, 21))
+        pScore = UILabel(frame: CGRect(x: 100, y: 30, width: 200, height: 21))
+        dScore = UILabel(frame: CGRect(x: 100, y: 30, width: 200, height: 21))
     }
-    
-    func hitButtonAction(){
+
+    func hitButtonAction() {
         PlayerX += 20
         Playerhand.append(newDeck.removeFirst())
         makePImageHolder(PlayerX, yPos: PlayerY, imgName:String(Playerhand[counter1]))
         Playertotal += Int(String(Playerhand[counter1].characters.suffix(2)))!
         counter1 += 1
-        if Playertotal > 21{
+        if Playertotal > 21 {
             Losefunc()
-        }
-        else if Playertotal == 21{
+        } else if Playertotal == 21 {
             Winfunc()
         }
         pScore.text = String("Your total: \(Playertotal)")
-        
+
     }
-    func DealerScore(){
-        dScore.center = CGPointMake(43, 120)
+    func DealerScore() {
+        dScore.center = CGPoint(x: 43, y: 120)
         dScore.font = UIFont(name: dScore.font.fontName, size: 10)
         dScore.textAlignment = NSTextAlignment.Center
         dScore.text = String("Dealer total: \(Dealertotal)")
         self.DealerView.addSubview(dScore)
     }
-    func PlayerScore(){
-        pScore.center = CGPointMake(43, 150)
+    func PlayerScore() {
+        pScore.center = CGPoint(x: 43, y: 150)
         pScore.font = UIFont(name: pScore.font.fontName, size: 10)
         pScore.textAlignment = NSTextAlignment.Center
         pScore.text = String("Your total: \(Playertotal)")
@@ -260,4 +256,3 @@ class ViewController: UIViewController {
 
 
 }
-
