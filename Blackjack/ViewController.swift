@@ -232,23 +232,31 @@ class ViewController: UIViewController {
         pScore.text = String("Your total: \(Playertotal)")
         self.PlayerView.addSubview(pScore)
     }
-    func Winfunc(){
+    func Winfunc() {
         FlipDealerCards()
         let WinMsg = "You win"
         let Winalert = UIAlertController(title:"YOU GOT \(Playertotal)!!", message: WinMsg, preferredStyle:.Alert)
-        let Winaction = UIAlertAction(title:"OK", style:.Default, handler:nil)
-        Winalert.addAction(Winaction)
+        let action = self.okAction()
+        Winalert.addAction(action)
         presentViewController(Winalert, animated: true, completion: nil)
     }
-    func Losefunc(){
+    func Losefunc() {
         FlipDealerCards()
         let myMsg = "You lose!"
         let alert = UIAlertController(title:"YOUR RESULT:\(Playertotal)", message: myMsg, preferredStyle:.Alert)
-        let action = UIAlertAction(title:"OK", style:.Default, handler: nil)
+        let action = self.okAction()
         alert.addAction(action)
         presentViewController(alert, animated: true, completion: nil)
     }
-    
+    func okAction() -> UIAlertAction {
+        let action = UIAlertAction(title: "OK", style: .Default) { (action) in
+            //if you were doing something that took a bit of time you could start a spinner here
+            self.NGButtonAction()
+            //and then remove it here
+        }
+        return action
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
